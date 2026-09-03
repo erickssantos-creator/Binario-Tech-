@@ -1,0 +1,56 @@
+=== INICIANDO BATERIA DE TESTES CRUD ===
+Thu Aug  6 07:50:35 PM UTC 2026
+----------------------------------------
+1. Cadastrando Veículo 1...
+HTTP/1.1 201 Created
+X-Powered-By: Express
+Content-Type: application/json; charset=utf-8
+Content-Length: 87
+ETag: W/"57-ZmGWtFCgWlG6efUhPoUtlujZKbo"
+Date: Thu, 06 Aug 2026 19:50:35 GMT
+Connection: keep-alive
+Keep-Alive: timeout=5
+
+{"id":5,"placa":"KLL-9090","montadora":"Volvo","modelo":"FH 540","status":"DISPONIVEL"}
+
+
+2. Cadastrando Veículo 2...
+HTTP/1.1 201 Created
+X-Powered-By: Express
+Content-Type: application/json; charset=utf-8
+Content-Length: 85
+ETag: W/"55-nfT8upTaP37A7/oN3aCosPr+rHo"
+Date: Thu, 06 Aug 2026 19:50:35 GMT
+Connection: keep-alive
+Keep-Alive: timeout=5
+
+{"id":6,"placa":"MNO-4321","montadora":"DAF","modelo":"XF 530","status":"DISPONIVEL"}
+
+
+3. Atualizando status do Veículo ID 3...
+HTTP/1.1 200 OK
+X-Powered-By: Express
+Content-Type: application/json; charset=utf-8
+Content-Length: 140
+ETag: W/"8c-WiyL+buMzN4tCNM+MXQ0/b07Gyo"
+Date: Thu, 06 Aug 2026 19:50:35 GMT
+Connection: keep-alive
+Keep-Alive: timeout=5
+
+{"mensagem":"Status atualizado com sucesso!","veiculo":{"id":3,"placa":"KLL-9090","montadora":"Volvo","modelo":"FH 540","status":"EM_ROTA"}}
+
+
+4. Deletando Veículo ID 4...
+HTTP/1.1 404 Not Found
+X-Powered-By: Express
+Content-Type: application/json; charset=utf-8
+Content-Length: 34
+ETag: W/"22-WeIgOtnMev695NFLvVmO/fE386k"
+Date: Thu, 06 Aug 2026 19:50:35 GMT
+Connection: keep-alive
+Keep-Alive: timeout=5
+
+{"erro":"Veiculo nao encontrado."}
+
+
+=== TESTES CONCLUÍDOS ===

@@ -1,0 +1,2 @@
+function tratarErros(err, req, res, next) {
+  console.error(`[ERRO LOG

@@ -1,0 +1,80 @@
+====================================================
+ AUDITORIA COMPLETA DE TELEMETRIA - BINÁRIO TECH
+ Data do Teste: Fri Aug 14 09:03:44 PM UTC 2026
+====================================================
+
+--- [1] Listar Telemetria Scania ---
+{
+  "montadora": "Scania",
+  "dados": [
+    {
+      "id": 1,
+      "modelo": "R450",
+      "vin": "9BS123456789",
+      "temperatura_motor": 88,
+      "status": "OK"
+    },
+    {
+      "id": 2,
+      "modelo": "S500",
+      "vin": "9BS987654321",
+      "temperatura_motor": 102,
+      "status": "ALERTA_AQUECIMENTO"
+    }
+  ]
+}
+
+
+--- [2] Registrar Telemetria Scania (Sucesso) ---
+{
+  "id": 3,
+  "modelo": "R540",
+  "vin": "9BS555444333",
+  "temperatura_motor": 99,
+  "status": "ALERTA_AQUECIMENTO"
+}
+
+
+--- [3] Registrar Telemetria Scania (Erro: VIN Inválido) ---
+{
+  "erro": "Validação falhou: O código VIN/Chassis deve conter exatamente 12 caracteres."
+}
+
+
+--- [4] Listar Telemetria Mercedes-Benz ---
+{
+  "montadora": "Mercedes-Benz",
+  "dados": [
+    {
+      "id": 1,
+      "modelo": "Actros",
+      "vin": "9BM111111111",
+      "temperatura_motor": 89,
+      "status": "OK"
+    },
+    {
+      "id": 2,
+      "modelo": "Atego",
+      "vin": "9BM222222222",
+      "temperatura_motor": 97,
+      "status": "ALERTA_AQUECIMENTO"
+    }
+  ]
+}
+
+
+--- [5] Registrar Telemetria Mercedes-Benz (Sucesso) ---
+{
+  "id": 3,
+  "modelo": "Actros 2651",
+  "vin": "9BM888777666",
+  "temperatura_motor": 91,
+  "status": "OK"
+}
+
+
+--- [6] Testando Rota 404 (Volvo) ---
+{
+  "erro": "Módulo ou Rota de Telemetria não encontrada."
+}
+
