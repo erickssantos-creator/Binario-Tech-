@@ -1,13 +1,11 @@
 const { body } = require('express-validator');
 
-// Pega o ano atual dinamicamente
-const anoAtual = new Date().getFullYear();
-
 const regrasCadastroVeiculo = [
   body('placa')
     .notEmpty().withMessage('A placa do veículo é obrigatória.')
     .isString().withMessage('A placa deve ser um texto.')
     .trim()
+    .toUpperCase()
     .isLength({ min: 7, max: 8 }).withMessage('A placa deve ter entre 7 e 8 caracteres.'),
   
   body('chassi')
@@ -18,12 +16,10 @@ const regrasCadastroVeiculo = [
     .notEmpty().withMessage('A capacidade de carga é obrigatória.')
     .isFloat({ min: 100 }).withMessage('A capacidade de carga deve ser um número maior ou igual a 100 Kg.'),
 
-  // ==================== EXERCÍCIO 2 ====================
   body('anoFabricacao')
     .optional()
-    .isInt({ min: 2000, max: anoAtual })
-    .withMessage(`O ano de fabricação deve ser um número inteiro entre 2000 e ${anoAtual}.`)
-  // ======================================================
+    .isInt({ min: 2000, max: new Date().getFullYear() })
+    .withMessage(`O ano de fabricação deve ser um número inteiro entre 2000 e ${new Date().getFullYear()}.`)
 ];
 
 module.exports = { regrasCadastroVeiculo };

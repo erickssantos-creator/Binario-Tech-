@@ -4,22 +4,25 @@ const frotaRoutes = require('./src/routes/frotaRoutes');
 const tratarErros = require('./src/middlewares/tratarErros');
 
 const app = express();
-const PORT = 3000;
+const PORT = 3009;
 
 app.use(cors());
 app.use(express.json());
 
+// Log de diagnóstico para ver se a requisição chega
+app.use((req, res, next) => {
+  console.log(`[REQUISIÇÃO RECEBIDA]: ${req.method} ${req.url}`);
+  next();
+});
+
 app.use('/api/v1/frota', frotaRoutes);
 
 app.use((req, res) => {
-  res.status(404).json({ erro: "Rota nao encontrada no servidor." });
+  res.status(404).json({ erro: "Rota não encontrada no servidor." });
 });
 
-// Registrar Middleware de Erro (deve ficar apos todas as rotas)
 app.use(tratarErros);
 
 app.listen(PORT, () => {
-  console.log(`[Binario Tech] Servidor da aula 10 ativo na porta ${PORT}`);
+  console.log(`[Binário Tech] Servidor da Aula 10 ativo na porta ${PORT}`);
 });
-
-
