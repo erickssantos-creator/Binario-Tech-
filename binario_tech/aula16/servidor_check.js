@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 const PORT = 3009;
 
+// Comentando esta parte
 app.use(express.json());
 
 app.get('/api/v1/status-servidor', (req, res) => {
