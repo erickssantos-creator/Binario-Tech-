@@ -1,0 +1,15 @@
+bruno.r+   82506  0.0  0.1 1015192 65548 ?       Sl   set10   0:00 node server.js
+luis.he+   92260  0.0  0.0 1016432 64440 ?       Sl   set10   0:00 node server.js
+julia.s+  106985  0.0  0.0 1014556 64328 ?       Sl   set10   0:00 node server.js
+gabriel+  115010  0.0  0.0 1013804 63420 ?       Sl   set10   0:00 node servidor_check.js
+myguel.+  115056  0.0  0.0 1013648 64060 ?       Sl   set10   0:00 node servidor_check.js
+bruno.r+  115064  0.0  0.0 1013760 64020 ?       Sl   set10   0:00 node servidor_check.js
+murilo.+  115111  0.0  0.0 1016692 62472 ?       Sl   set10   0:00 node servidor_check.js
+maely.p+  115292  0.0  0.0 994140 52844 ?        Sl   set10   0:00 node servidor_check.js
+daniel.+  115355  0.0  0.0 1013740 63384 ?       Sl   set10   0:00 node servidor_check.js
+maria.e+  116255  0.0  0.0 1016300 61320 ?       Sl   set10   0:00 node servidor_check.js
+murilo.+  116842  0.0  0.0 1013768 63872 ?       Sl   set10   0:00 node servidor_check.js
+maria.m+  118417  0.0  0.0 1013508 62584 ?       Sl   set10   0:00 node servidor_check.js
+nicolla+  121279  0.0  0.0 1014380 62552 ?       Sl   set10   0:00 node servidor_check.js
+nicolla+  121523  0.0  0.0 1014128 62968 ?       Sl   set10   0:00 node servidor_check.js
+erick.s+  130400  0.0  0.0   6540  2516 pts/6    S+   08:37   0:00 grep node
