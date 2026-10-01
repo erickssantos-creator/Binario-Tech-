@@ -1,13 +1,12 @@
-<<<<<<< Updated upstream
-Fri Sep 18 06:40:41 PM UTC 2026
-cs-520372619362-default
-               total        used        free      shared  buff/cache   available
-Mem:           7.8Gi       2.9Gi       3.6Gi       1.1Mi       1.5Gi       4.9Gi
-Swap:             0B          0B          0B
-=======
-sex 18 set 2026 12:28:51 -03
-genesis
-               total       usada       livre    compart.  buff/cache  disponível
-Mem.:           62Gi       4,6Gi        24Gi       116Mi        34Gi        57Gi
-Swap:           63Gi          0B        63Gi
->>>>>>> Stashed changes
+========================================
+ Informações do Ambiente de Desenvolvimento
+========================================
+
+Sistema Operacional: Linux / Ubuntu (Genesis)
+Usuário: erick.simionato
+Repositório: Binario-Tech-
+Branch: main
+
+Configurações do Ambiente:
+- Git configurado e integrado ao GitHub
+- Node.js e ferramentas de desenvolvimento instaladas
