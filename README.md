@@ -27,13 +27,13 @@ A **Binario Tech** é um ambiente prático de aprendizado voltado ao desenvolvim
 
 ## 📌 Sumário Navegável
 
-- [📖 Sobre a Binario Tech](#-sobre-a-binario-tech)
-- [👨‍💻 Informações do Projeto](#-informações-do-projeto)
-- [📚 Aula 01: Configuração do Ambiente Linux & CLI](#-aula-01-configuração-do-ambiente-linux--cli)
-- [📚 Aula 02: Servidores HTTP, Processos e Dependências](#-aula-02-servidores-http-processos-e-dependências)
-- [📚 Aula 03: Inspeção Avançada CLI e Automação Shell](#-aula-03-inspeção-avançada-cli-e-automação-shell)
-- [📚 Aula 04: Arquitetura RESTful e Operações CRUD](#-aula-04-arquitetura-restful-e-operações-crud)
-- [📚 Aula 05: Arquitetura Modular, Middlewares, CORS e Segurança](#-aula-05-arquitetura-modular-middlewares-cors-e-segurança)
+- [📖 Sobre a Binario Tech](#sobre-a-binario-tech)
+- [👨‍💻 Informações do Projeto](#informações-do-projeto)
+- [📚 Aula 01: Configuração do Ambiente Linux & CLI](#aula-01-configuração-do-ambiente-linux--cli)
+- [📚 Aula 02: Servidores HTTP, Processos e Dependências](#aula-02-servidores-http-processos-e-dependências)
+- [📚 Aula 03: Inspeção Avançada CLI e Automação Shell](#aula-03-inspeção-avançada-cli-e-automação-shell)
+- [📚 Aula 04: Arquitetura RESTful e Operações CRUD](#aula-04-arquitetura-restful-e-operações-crud)
+- [📚 Aula 05: Arquitetura Modular, Middlewares, CORS e Segurança](#aula-05-arquitetura-modular-middlewares-cors-e-segurança)
 ---
 
 ## 📚 Aula 01: Configuração do Ambiente Linux & CLI
