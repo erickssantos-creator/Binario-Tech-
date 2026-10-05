@@ -7,10 +7,10 @@
     "start": "node telemetria.js"
   },
   "keywords": [],
-  "author": "",
   "license": "ISC",
   "dependencies": {
     "express": "^4.22.3",
     "httpie": "^1.1.2"
-  }
+  },
+  "type": "commonjs"
 }
