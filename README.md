@@ -34,7 +34,6 @@ A **Binario Tech** é um ambiente prático de aprendizado voltado ao desenvolvim
 - [📚 Aula 03: Inspeção Avançada CLI e Automação Shell](#-aula-03-inspeção-avançada-cli-e-automação-shell)
 - [📚 Aula 04: Arquitetura RESTful e Operações CRUD](#-aula-04-arquitetura-restful-e-operações-crud)
 - [📚 Aula 05: Arquitetura Modular, Middlewares, CORS e Segurança](#-aula-05-arquitetura-modular-middlewares-cors-e-segurança)
-
 ---
 
 ## 📚 Aula 01: Configuração do Ambiente Linux & CLI
@@ -80,8 +79,7 @@ $ cat dev.json
 Contar o numero de linhas do arquivo usando comando do Linux:
 $ wc -l dev.json
 
-
-## Aula 02:
+## 📚 Aula 02: Servidores HTTP, Processos e Dependências
 cd ~/binario_tech
 mkdir aula2 && cd aula2
 npm init -y
@@ -248,8 +246,7 @@ curl -s http://localhost:3009/vw/info | jq .
 Comando: chmod +x testar_servidor.sh
 Comando: ./testar_servidor.sh
 
-
-## Aula 03:
+## 📚 Aula 03: Inspeção Avançada CLI e Automação Shell
 cd ~/binario_tech
 mkdir -p aula03 && cd aula03
 npm init -y
@@ -354,9 +351,7 @@ Localize o PID do processo Node.js em execucao no seu terminal usando 'ps aux | 
 
 Comando: kill -9 $PID
 
-
-# Aula 04:
-
+## 📚 Aula 04: Arquitetura RESTful e Operações CRUD
 $ cd ~/binario_tech
 $ mkdir -p aula04
 $ cd aula04
