@@ -15,7 +15,7 @@ Repositório central de práticas, APIs RESTful, automações em scripts Bash e 
 * **Orientador:** Prof. Irineu Moura Caldeira
 * **Repositório:** `Binario-tech`
 * **Disciplina:** Programação Back-End 1 (PBE1)
-* **Porta de Execução Padrão:** `3009` *(Mapeada estritamente para o número de chamada do desenvolvedor)*
+* **Porta de Execução Padrão:** `3009` *(De acordo com o número de minha chamada: 09)*
 
 ---
 
