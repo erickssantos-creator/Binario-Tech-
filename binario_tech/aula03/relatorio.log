@@ -1,13 +1,38 @@
 =========================================
   AUDITORIA DE TELEMETRIA - BINARIO TECH 
+<<<<<<< HEAD
   Data/Hora: Sun Oct  4 09:53:04 PM UTC 2026
+=======
+  Data/Hora: qui 08 out 2026 09:49:57 -03
+>>>>>>> 8233182 (Prova aula03 concluida)
 =========================================
 
 [1] Testando Rota Scania...
+{
+  "montadora": "Scania",
+  "modelo": "R450",
+  "status": "OK",
+  "conexao": true,
+  "velocidade_media": 82
+}
 
 [2] Testando Rota Mercedes-Benz...
+{
+  "montadora": "Mercedes-Benz",
+  "modelo": "Actros",
+  "status": "OK",
+  "conexao": true,
+  "velocidade_media": 78
+}
 
 [3] Testando Rota Volkswagen...
+{
+  "montadora": "Volkswagen",
+  "modelo": "Delivery",
+  "status": "ALERTA",
+  "conexao": false,
+  "velocidade_media": 0
+}
 
 -----------------------------------------
 Auditoria finalizada com sucesso!

@@ -1,7 +1,6 @@
 {
   "name": "aula03",
   "version": "1.0.0",
-  "description": "",
   "main": "telemetria.js",
   "scripts": {
     "start": "node telemetria.js"
@@ -12,5 +11,9 @@
     "express": "^4.22.3",
     "httpie": "^1.1.2"
   },
+<<<<<<< HEAD
   "type": "commonjs"
+=======
+  "description": ""
+>>>>>>> 8233182 (Prova aula03 concluida)
 }

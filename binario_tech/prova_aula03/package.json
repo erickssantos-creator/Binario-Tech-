@@ -1,0 +1,17 @@
+{
+  "name": "aula03",
+  "version": "1.0.0",
+  "main": "telemetria.js",
+  "scripts": {
+    "start": "node telemetria.js"
+  },
+  "keywords": [],
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.22.3",
+    "httpie": "^1.1.2"
+  },
+  "type": "commonjs",
+  "author": "",
+  "description": ""
+}
