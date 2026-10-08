@@ -253,6 +253,25 @@ npm init -y
 npm install express
 sudo apt-get update && sudo apt-get install -y jq httpie
 
+
+Crie o arquivo package.json com o seguinte conteudo:
+{
+  "name": "aula03",
+  "version": "1.0.0",
+  "description": "",
+  "main": "telemetria.js",
+  "scripts": {
+    "start": "node telemetria.js"
+  },
+  "keywords": [],
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.22.3",
+    "httpie": "^1.1.2"
+  },
+  "type": "commonjs"
+}
+
 Crie o arquivo telemetria.js com o seguinte conteudo:
 const express = require('express');
 const app = express();
@@ -273,6 +292,11 @@ app.get('/api/v1/mercedes', (req, res) => {
 // Rota Volkswagen
 app.get('/api/v1/vw', (req, res) => {
     res.json({ montadora: "Volkswagen", modelo: "Delivery", status: "ALERTA", conexao: false, velocidade_media: 0 });
+});
+
+// Rota Volvo (EXERCÍCIO 04)
+app.get('/api/v1/volvo', (req, res) => {
+    res.json({ montadora: "Volvo", modelo: "FH 540", status: "OK", conexao: true, velocidade_media: 85 });
 });
 
 app.listen(PORT, () => {
