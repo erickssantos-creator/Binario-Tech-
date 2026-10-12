@@ -617,3 +617,276 @@ echo -e "\n=== FIM DOS TESTES ===" >> $LOG_FILE
                                                                                                                                           
 Comando: chmod +x teste_crud.sh
 Comando: ./teste_crud.sh
+
+## 📚 Aula 05: Arquitetura Modular, Middlewares, CORS e Segurança
+cd ~/binario_tech
+mkdir -p aula05/routes aula05/middlewares
+cd aula05
+npm init -y
+npm install express cors
+sudo apt-get update && sudo apt-get install -y jq httpie
+
+package.json:
+Crie o arquivo pacjage.json com o seguinte conteudo:
+{
+  "name": "aula05",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "type": "commonjs",
+  "dependencies": {
+    "cors": "^2.8.6",
+    "express": "^5.2.1"
+  }
+}
+
+middlewares/logger.js
+Crie o arquivo logger.js com o seguinte conteudo:
+function loggerMiddleware(req, res, next) {
+    const inicio = Date.now();
+    const timestamp = new Date().toISOString();
+    
+    res.on('finish', () => {
+        const duracao = Date.now() - inicio;
+        console.log(`[LOG ${timestamp}] ${req.method} ${req.originalUrl} - Status: ${res.statusCode} (${duracao}ms)`);
+    });
+    
+    next();
+}
+
+module.exports = loggerMiddleware;
+
+middlewares/auth.js
+Crie o arquivo auth.js com o seguinte conteudo:
+function authMiddleware(req, res, next) {
+    const apiKey = req.headers['x-api-key'];
+    const CHAVE_VALIDA = "binario-tech-secret-2026";
+
+    if (!apiKey || apiKey !== CHAVE_VALIDA) {
+        return res.status(401).json({
+            erro: "Acesso nao autorizado. Header 'X-API-KEY' invalido ou ausente."
+        });
+    }
+
+    next();
+}
+
+module.exports = authMiddleware;
+
+middlewares/validaCnh.js
+Crie o arquivo validaCnh.js com o seguinte conteudo:
+function validaCnhMiddleware(req, res, next) {
+    const { cnh } = req.body;
+    const regexCnh = /^\d{11}$/;
+
+    if (!cnh || !regexCnh.test(cnh)) {
+        return res.status(400).json({ 
+            erro: "CNH invalida. O campo 'cnh' deve conter exatamente 11 digitos numericos." 
+        });
+    }
+
+    next();
+}
+
+module.exports = validaCnhMiddleware;
+
+routes/motoristas.js
+Crie o arquivo motoristas.js com o seguinte conteudo:
+const express = require('express');
+const router = express.Router();
+const validaCnh = require('../middlewares/validaCnh');
+
+let motoristas = [
+    { id: 1, nome: "Carlos Silva", cnh: "12345678900", categoria: "E", ativo: true },
+    { id: 2, nome: "Ana Pereira", cnh: "98765432100", categoria: "D", ativo: true }
+];
+
+// GET /api/v1/motoristas
+router.get('/', (req, res) => {
+    res.status(200).json(motoristas);
+});
+
+// POST /api/v1/motoristas (Com validação de CNH via middleware)
+router.post('/', validaCnh, (req, res) => {
+    const { nome, cnh, categoria } = req.body;
+
+    if (!nome || !cnh || !categoria) {
+        return res.status(400).json({ erro: "Campos 'nome', 'cnh' e 'categoria' sao obrigatorios." });
+    }
+
+    const novoMotorista = {
+        id: motoristas.length + 1,
+        nome,
+        cnh,
+        categoria,
+        ativo: true
+    };
+
+    motoristas.push(novoMotorista);
+    res.status(201).json(novoMotorista);
+});
+
+module.exports = router;
+
+routes/manutencoes.js
+Crie o arquivo manutencoes.js com o seguinte conteudo:
+const express = require('express');
+const router = express.Router();
+
+let manutencoes = [
+    { id: 1, veiculoId: 1, descricao: "Troca de oleo e filtros", valor: 850.00, status: "CONCLUIDO" },
+    { id: 2, veiculoId: 2, descricao: "Alinhamento e balanceamento", valor: 450.00, status: "EM_ANDAMENTO" }
+];
+
+// GET /api/v1/manutencoes
+router.get('/', (req, res) => {
+    res.status(200).json(manutencoes);
+});
+
+// POST /api/v1/manutencoes
+router.post('/', (req, res) => {
+    const { veiculoId, descricao, valor } = req.body;
+
+    if (!veiculoId || !descricao || !valor) {
+        return res.status(400).json({ erro: "Campos 'veiculoId', 'descricao' e 'valor' sao obrigatorios." });
+    }
+
+    const novaManutencao = {
+        id: manutencoes.length + 1,
+        veiculoId,
+        descricao,
+        valor,
+        status: "AGENDADO"
+    };
+
+    manutencoes.push(novaManutencao);
+    res.status(201).json(novaManutencao);
+});
+
+module.exports = router;
+
+app.js
+Crie o arquivo app.js com o seguinte conteudo:
+const express = require('express');
+const cors = require('cors');
+const loggerMiddleware = require('./middlewares/logger');
+const authMiddleware = require('./middlewares/auth');
+const motoristasRouter = require('./routes/motoristas');
+const manutencoesRouter = require('./routes/manutencoes');
+
+const app = express();
+const PORT = 3009;
+
+// Middlewares Globais
+app.use(cors());
+app.use(express.json());
+app.use(loggerMiddleware);
+
+// Rota Publica
+app.get('/api/v1/health', (req, res) => {
+    res.status(200).json({ status: "ONLINE", aplicacao: "Binario Tech API v2" });
+});
+
+// Rotas Protegidas por Autenticacao
+app.use('/api/v1/motoristas', authMiddleware, motoristasRouter);
+app.use('/api/v1/manutencoes', authMiddleware, manutencoesRouter);
+
+// Middleware Global de Tratamento de Erros 404 (Rota nao encontrada)
+app.use((req, res) => {
+    res.status(404).json({ erro: "Endpoint nao encontrado no servidor Binario Tech." });
+});
+
+app.listen(PORT, () => {
+    console.log(`[Binario Tech] Servidor de Middlewares ativo na porta ${PORT}`);
+});
+
+Executar o servidor em segundo plano no terminal:
+node app.js &
+
+Testar rota publica (Health Check):
+   $ curl -s http://localhost:3009/api/v1/health | jq .
+
+Testar rota protegida SEM API Key (Deve retornar 401 Unauthorized):
+   $ curl -s http://localhost:3009/api/v1/motoristas | jq .
+
+Testar rota protegida COM API Key valida:
+   $ curl -s -H "X-API-KEY: binario-tech-secret-2026" http://localhost:3009/api/v1/motoristas | jq .
+
+Cadastrar novo motorista COM API Key:
+   $ curl -s -X POST http://localhost:3009/api/v1/motoristas \
+     -H "X-API-KEY: binario-tech-secret-2026" \
+     -H "Content-Type: application/json" \
+     -d '{"nome":"Roberto Souza","cnh":"55544433322","categoria":"E"}' | jq .
+
+
+# Exercicio 01:
+Efetue uma requisicao GET na rota de 'health' e verifique nos logs do terminal a mensagem gerada pelo 'loggerMiddleware'.
+
+Comando: curl -s http://localhost:3009/api/v1/health | jq .
+
+# Exercicio 02:
+Crie um novo arquivo de rota 'routes/manutencoes.js' que gerencia orcaments de manutencao dos caminhões. Adicione rotas para listar e cadastrar manutencoes.
+
+Comando: cat routes/manutencoes.js
+
+# Exercicio 03:
+Registre o novo roteador de manutencoes no arquivo 'app.js' sob o caminho '/api/v1/manutencoes', aplicando tambem o 'authMiddleware'.
+
+Comando: curl -s -H "X-API-KEY: binario-tech-secret-2026" http://localhost:3009/api/v1/manutencoes | jq .
+
+# Exercicio 04:
+Crie um middleware exclusivo de validacao de CNH chamado 'middlewares/validaCnh.js' que garante que a CNH informada no POST contenha exatamente 11 digitos numericos.
+
+Comando: cat middlewares/validaCnh.js
+
+# Exercicio 05:
+Aplique o middleware 'validaCnh' apenas na rota POST de motoristas e faca um teste via cURL enviando uma CNH invalida (ex: "123"). Confirme o retorno 400 Bad Request.
+
+Comando: curl -i -X POST http://localhost:3009/api/v1/motoristas \
+  -H "X-API-KEY: binario-tech-secret-2026" \
+  -H "Content-Type: application/json" \
+  -d '{"nome":"Teste CNH","cnh":"123","categoria":"E"}'
+
+# Exercicio 06:
+Faca uma requisicao GET para uma rota inexistente como '/api/v1/clientes' e confirme que o middleware global de 404 intercepta e responde em JSON padronizado.
+
+Comando: curl -s http://localhost:3009/api/v1/clientes | jq .
+
+# Exercicio 07:
+Crie um script Bash chamado 'teste_seguranca.sh' que simula 3 tentativas de acesso sem chave de API e 1 tentativa com chave valida, salvando os retornos em 'audit_seguranca.log'.
+
+código:
+#!/bin/bash
+
+LOG_FILE="audit_seguranca.log"
+
+echo "=== INICIANDO AUDITORIA DE SEGURANÇA ($(date)) ===" > "$LOG_FILE"
+
+# 3 Tentativas sem chave de API
+echo -e "\n--- Tentativa 1 (Sem API Key) ---" >> "$LOG_FILE"
+curl -s http://localhost:3009/api/v1/motoristas >> "$LOG_FILE"
+
+echo -e "\n--- Tentativa 2 (Sem API Key) ---" >> "$LOG_FILE"
+curl -s http://localhost:3009/api/v1/motoristas >> "$LOG_FILE"
+
+echo -e "\n--- Tentativa 3 (Sem API Key) ---" >> "$LOG_FILE"
+curl -s http://localhost:3009/api/v1/motoristas >> "$LOG_FILE"
+
+# 1 Tentativa com chave de API válida
+echo -e "\n--- Tentativa 4 (Com API Key Válida) ---" >> "$LOG_FILE"
+curl -s -H "X-API-KEY: binario-tech-secret-2026" http://localhost:3009/api/v1/motoristas >> "$LOG_FILE"
+
+echo -e "\n\n=== AUDITORIA CONCLUÍDA ===" >> "$LOG_FILE"
+
+Comando: chmod +x teste_seguranca.sh
+Comando: ./teste_seguranca.sh
+Comando: cat audit_seguranca.log
+
+# Exercicio 08:
+Utilize o comando 'ps aux | grep node' no terminal Linux para encontrar o processo da API e encerre-o utilizando 'kill -9 <PID>'.
+
+Comando: kill -9 $(ps aux | grep 'node app.js' | grep -v grep | awk '{print $2}')
