@@ -382,6 +382,22 @@ $ cd aula04
 $ npm init -y
 $ npm install express
 
+Crie o arquivo package.json com o seguinte conteudo:
+{
+  "name": "aula04",
+  "version": "1.0.0",
+  "description": "",
+  "main": "frota_api.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "type": "commonjs",
+  "dependencies": {
+    "express": "^5.2.1"
+  }
+}
+
 Crie o arquivo frota_api.js com o seguinte conteudo:
 const express = require('express');
 const app = express();
@@ -389,13 +405,13 @@ const PORT = 3009;
 
 app.use(express.json());
 
-// Base de dados em memória
+// Banco de dados em memória
 let veiculos = [
     { id: 1, placa: "ABC-1234", montadora: "Scania", modelo: "R450", status: "DISPONIVEL" },
     { id: 2, placa: "XYZ-9876", montadora: "Mercedes-Benz", modelo: "Actros", status: "EM_ROTA" }
 ];
 
-// 1. GET /api/v1/veiculos - Listar todos ou filtrar por Query Param
+// 1. GET /api/v1/veiculos - Listar todos os veículos (com filtro via query param 'status')
 app.get('/api/v1/veiculos', (req, res) => {
     const { status } = req.query;
     if (status) {
@@ -405,7 +421,7 @@ app.get('/api/v1/veiculos', (req, res) => {
     res.status(200).json(veiculos);
 });
 
-// 2. GET /api/v1/veiculos/:id - Buscar por ID
+// 2. GET /api/v1/veiculos/:id - Buscar veículo específico por ID
 app.get('/api/v1/veiculos/:id', (req, res) => {
     const id = parseInt(req.params.id);
     const veiculo = veiculos.find(v => v.id === id);
@@ -422,7 +438,7 @@ app.post('/api/v1/veiculos', (req, res) => {
         return res.status(400).json({ erro: "Campos 'placa', 'montadora' e 'modelo' sao obrigatorios." });
     }
     const novoVeiculo = {
-        id: veiculos.length + 1,
+        id: veiculos.length ? Math.max(...veiculos.map(v => v.id)) + 1 : 1,
         placa,
         montadora,
         modelo,
@@ -432,29 +448,12 @@ app.post('/api/v1/veiculos', (req, res) => {
     res.status(201).json(novoVeiculo);
 });
 
-// 4. PUT /api/v1/veiculos/:id - Substituição total de recurso
-app.put('/api/v1/veiculos/:id', (req, res) => {
-    const id = parseInt(req.params.id);
-    const { placa, montadora, modelo, status } = req.body;
-    const index = veiculos.findIndex(v => v.id === id);
-    
-    if (index === -1) {
-        return res.status(404).json({ erro: "Veiculo nao encontrado." });
-    }
-    if (!placa || !montadora || !modelo || !status) {
-        return res.status(400).json({ erro: "Todos os campos sao obrigatorios para substituicao total (PUT)." });
-    }
-
-    veiculos[index] = { id, placa, montadora, modelo, status: status.toUpperCase() };
-    res.status(200).json({ mensagem: "Veiculo atualizado completamente!", veiculo: veiculos[index] });
-});
-
-// 5. PATCH /api/v1/veiculos/:id/status - Atualização parcial
+// 4. PATCH /api/v1/veiculos/:id/status - Atualização parcial (apenas status)
 app.patch('/api/v1/veiculos/:id/status', (req, res) => {
     const id = parseInt(req.params.id);
     const { status } = req.body;
     const veiculo = veiculos.find(v => v.id === id);
-    
+
     if (!veiculo) {
         return res.status(404).json({ erro: "Veiculo nao encontrado." });
     }
@@ -466,7 +465,32 @@ app.patch('/api/v1/veiculos/:id/status', (req, res) => {
     res.status(200).json({ mensagem: "Status atualizado com sucesso!", veiculo });
 });
 
-// 6. DELETE /api/v1/veiculos/:id - Remoção do recurso
+// 5. PUT /api/v1/veiculos/:id - Substituição total (Exercício 07)
+app.put('/api/v1/veiculos/:id', (req, res) => {
+    const id = parseInt(req.params.id);
+    const { placa, montadora, modelo, status } = req.body;
+    const index = veiculos.findIndex(v => v.id === id);
+
+    if (index === -1) {
+        return res.status(404).json({ erro: "Veiculo nao encontrado para substituicao." });
+    }
+
+    if (!placa || !montadora || !modelo || !status) {
+        return res.status(400).json({ erro: "Para substituicao total (PUT), os campos 'placa', 'montadora', 'modelo' e 'status' sao obrigatorios." });
+    }
+
+    veiculos[index] = {
+        id,
+        placa,
+        montadora,
+        modelo,
+        status: status.toUpperCase()
+    };
+
+    res.status(200).json({ mensagem: "Veiculo substituido totalmente com sucesso!", veiculo: veiculos[index] });
+});
+
+// 6. DELETE /api/v1/veiculos/:id - Remover veículo da frota
 app.delete('/api/v1/veiculos/:id', (req, res) => {
     const id = parseInt(req.params.id);
     const index = veiculos.findIndex(v => v.id === id);
@@ -563,11 +587,33 @@ Crie um script Bash chamado 'teste_crud.sh' que executa sequencialmente o cadast
 
 Código:
 #!/bin/bash
-echo "--- INICIO TESTE CRUD ---" > crud_result.log
-curl -s -X POST http://localhost:3009/api/v1/veiculos -H "Content-Type: application/json" -d '{"placa":"AAA-1111","montadora":"Scania","modelo":"P360"}' >> crud_result.log
-curl -s -X POST http://localhost:3009/api/v1/veiculos -H "Content-Type: application/json" -d '{"placa":"BBB-2222","montadora":"Mercedes","modelo":"Atego"}' >> crud_result.log
-curl -s -X PATCH http://localhost:3009/api/v1/veiculos/1/status -H "Content-Type: application/json" -d '{"status":"EM_ROTA"}' >> crud_result.log
-curl -s -X DELETE http://localhost:3009/api/v1/veiculos/2 >> crud_result.log
 
+LOG_FILE="crud_result.log"
+echo "=== LOG DE EXECUCAO DO TESTE CRUD ===" > $LOG_FILE
+
+echo -e "\n1. Cadastrando primeiro veiculo..." >> $LOG_FILE
+curl -s -X POST http://localhost:3009/api/v1/veiculos \
+  -H "Content-Type: application/json" \
+  -d '{"placa":"AAA-1111","montadora":"Volvo","modelo":"VM"}' >> $LOG_FILE
+echo "" >> $LOG_FILE
+
+echo -e "\n2. Cadastrando segundo veiculo..." >> $LOG_FILE
+curl -s -X POST http://localhost:3009/api/v1/veiculos \
+  -H "Content-Type: application/json" \
+  -d '{"placa":"BBB-2222","montadora":"Scania","modelo":"R450"}' >> $LOG_FILE
+echo "" >> $LOG_FILE
+
+echo -e "\n3. Atualizando status do veiculo ID 3..." >> $LOG_FILE
+curl -s -X PATCH http://localhost:3009/api/v1/veiculos/3/status \
+  -H "Content-Type: application/json" \
+  -d '{"status":"EM_ROTA"}' >> $LOG_FILE
+echo "" >> $LOG_FILE
+
+echo -e "\n4. Removendo veiculo ID 4..." >> $LOG_FILE
+curl -s -X DELETE http://localhost:3009/api/v1/veiculos/4 >> $LOG_FILE
+echo "" >> $LOG_FILE
+
+echo -e "\n=== FIM DOS TESTES ===" >> $LOG_FILE
+                                                                                                                                          
 Comando: chmod +x teste_crud.sh
 Comando: ./teste_crud.sh
