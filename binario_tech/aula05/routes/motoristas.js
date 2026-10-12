@@ -1,22 +1,23 @@
 const express = require('express');
 const router = express.Router();
-const validaCnh = require('../middlewares/validaCnh'); // 1. Importa o middleware
+const validaCnh = require('../middlewares/validaCnh');
 
 let motoristas = [
     { id: 1, nome: "Carlos Silva", cnh: "12345678900", categoria: "E", ativo: true },
     { id: 2, nome: "Ana Pereira", cnh: "98765432100", categoria: "D", ativo: true }
 ];
 
+// GET /api/v1/motoristas
 router.get('/', (req, res) => {
     res.status(200).json(motoristas);
 });
 
-// 2. Coloque 'validaCnh' antes de (req, res)
+// POST /api/v1/motoristas (Com validação de CNH via middleware)
 router.post('/', validaCnh, (req, res) => {
     const { nome, cnh, categoria } = req.body;
 
-    if (!nome || !categoria) {
-        return res.status(400).json({ erro: "Campos 'nome' e 'categoria' sao obrigatorios." });
+    if (!nome || !cnh || !categoria) {
+        return res.status(400).json({ erro: "Campos 'nome', 'cnh' e 'categoria' sao obrigatorios." });
     }
 
     const novoMotorista = {

@@ -3,8 +3,8 @@ function validaCnhMiddleware(req, res, next) {
     const regexCnh = /^\d{11}$/;
 
     if (!cnh || !regexCnh.test(cnh)) {
-        return res.status(400).json({
-            erro: "CNH invalida. Deve conter exatamente 11 digitos numericos."
+        return res.status(400).json({ 
+            erro: "CNH invalida. O campo 'cnh' deve conter exatamente 11 digitos numericos." 
         });
     }
 

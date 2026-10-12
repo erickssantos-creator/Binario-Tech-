@@ -1,4 +1,4 @@
-=== INICIANDO AUDITORIA DE SEGURANÇA (Fri Aug  7 09:29:12 PM UTC 2026) ===
+=== INICIANDO AUDITORIA DE SEGURANÇA (Mon Oct 12 03:11:15 PM UTC 2026) ===
 
 --- Tentativa 1 (Sem API Key) ---
 {"erro":"Acesso nao autorizado. Header 'X-API-KEY' invalido ou ausente."}
@@ -7,6 +7,6 @@
 --- Tentativa 3 (Sem API Key) ---
 {"erro":"Acesso nao autorizado. Header 'X-API-KEY' invalido ou ausente."}
 --- Tentativa 4 (Com API Key Válida) ---
-[{"id":1,"nome":"Carlos Silva","cnh":"12345678900","categoria":"E","ativo":true},{"id":2,"nome":"Ana Pereira","cnh":"98765432100","categoria":"D","ativo":true}]
+[{"id":1,"nome":"Carlos Silva","cnh":"12345678900","categoria":"E","ativo":true},{"id":2,"nome":"Ana Pereira","cnh":"98765432100","categoria":"D","ativo":true},{"id":3,"nome":"Roberto Souza","cnh":"55544433322","categoria":"E","ativo":true}]
 
 === AUDITORIA CONCLUÍDA ===

@@ -2,8 +2,8 @@ const express = require('express');
 const router = express.Router();
 
 let manutencoes = [
-    { id: 1, veiculo: "Caminhão Scania R450", descricao: "Troca de óleo e filtros", valor: 1500.00 },
-    { id: 2, veiculo: "Volvo FH 540", descricao: "Substituição das pastilhas de freio", valor: 3200.00 }
+    { id: 1, veiculoId: 1, descricao: "Troca de oleo e filtros", valor: 850.00, status: "CONCLUIDO" },
+    { id: 2, veiculoId: 2, descricao: "Alinhamento e balanceamento", valor: 450.00, status: "EM_ANDAMENTO" }
 ];
 
 // GET /api/v1/manutencoes
@@ -13,17 +13,18 @@ router.get('/', (req, res) => {
 
 // POST /api/v1/manutencoes
 router.post('/', (req, res) => {
-    const { veiculo, descricao, valor } = req.body;
+    const { veiculoId, descricao, valor } = req.body;
 
-    if (!veiculo || !descricao || !valor) {
-        return res.status(400).json({ erro: "Campos 'veiculo', 'descricao' e 'valor' sao obrigatorios." });
+    if (!veiculoId || !descricao || !valor) {
+        return res.status(400).json({ erro: "Campos 'veiculoId', 'descricao' e 'valor' sao obrigatorios." });
     }
 
     const novaManutencao = {
         id: manutencoes.length + 1,
-        veiculo,
+        veiculoId,
         descricao,
-        valor
+        valor,
+        status: "AGENDADO"
     };
 
     manutencoes.push(novaManutencao);
