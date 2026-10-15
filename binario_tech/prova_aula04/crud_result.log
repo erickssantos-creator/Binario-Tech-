@@ -1,0 +1,15 @@
+=== LOG DE EXECUCAO DO TESTE CRUD - qui 15 out 2026 13:48:49 -03 ===
+
+1. Cadastrando primeiro veiculo...
+{"id":8,"placa":"AAA-1111","montadora":"Volvo","modelo":"VM","status":"DISPONIVEL"}
+
+2. Cadastrando segundo veiculo...
+{"id":9,"placa":"BBB-2222","montadora":"Scania","modelo":"R450","status":"DISPONIVEL"}
+
+3. Atualizando status do veiculo ID 3...
+{"mensagem":"Status atualizado com sucesso!","veiculo":{"id":3,"placa":"AAA-1111","montadora":"Volvo","modelo":"VM","status":"EM_ROTA"}}
+
+4. Removendo veiculo ID 4...
+{"erro":"Veiculo nao encontrado."}
+
+=== FIM DOS TESTES ===
